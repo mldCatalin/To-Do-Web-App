@@ -2,15 +2,12 @@ package mldcatalinprojects.wunderlist.model;
 
 import javax.persistence.*;
 
-/**
- * @author Catalin Moldovan
- */
-
 @Entity(name="user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
     private Integer id;
     
     @Column
