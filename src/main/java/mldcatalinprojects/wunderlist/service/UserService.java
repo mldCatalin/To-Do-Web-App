@@ -2,6 +2,8 @@ package mldcatalinprojects.wunderlist.service;
 
 import mldcatalinprojects.wunderlist.exception.InputValidationException;
 import mldcatalinprojects.wunderlist.exception.ResourceExistsException;
+import mldcatalinprojects.wunderlist.exception.ResourceNotFoundException;
+import mldcatalinprojects.wunderlist.model.EmailDTO;
 import mldcatalinprojects.wunderlist.model.User;
 import mldcatalinprojects.wunderlist.model.UserDTO;
 import mldcatalinprojects.wunderlist.repository.UserRepository;
@@ -16,21 +18,33 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     
-    public User addUser(UserDTO newUser){
+    public User addUser(UserDTO newUser) {
         
-        if (isEmpty(newUser.getName()) || isEmpty(newUser.getEmail())){
+        if (isEmpty(newUser.getName()) || isEmpty(newUser.getEmail())) {
             throw new InputValidationException("Missing name and/or email");
         }
         
         User userByEmail = userRepository.findUserByEmail(newUser.getEmail());
-        if (userByEmail != null){
-            throw new ResourceExistsException("This Email is already registered");
+        if (userByEmail != null) {
+            throw new ResourceExistsException("This email is already registered");
         }
-
+        
         User user = new User();
         user.setName(newUser.getName());
         user.setEmail(newUser.getEmail());
         userRepository.save(user);
         return user;
+    }
+    
+    public Iterable<User> getUsers() {
+        return userRepository.findAll();
+    }
+    
+    public User getUserByEmail(EmailDTO email) {
+        User existingUser = userRepository.findUserByEmail(email.getEmail());
+        if (existingUser == null) {
+            throw new ResourceNotFoundException("User not found");
+        }
+        return existingUser;
     }
 }
