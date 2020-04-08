@@ -20,6 +20,17 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Folder> folders;
     
+    @OneToMany(mappedBy = "createdByUser")
+    private List<ToDoList> toDoLists;
+    
+    public List<ToDoList> getToDoLists() {
+        return toDoLists;
+    }
+    
+    public void setToDoLists(List<ToDoList> toDoLists) {
+        this.toDoLists = toDoLists;
+    }
+    
     public List<Folder> getFolders() {
         return folders;
     }

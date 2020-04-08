@@ -13,5 +13,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     
     User findUserByEmail(@RequestParam String email);
-
+    
+    User findUserById(Integer userId);
 }

@@ -14,8 +14,11 @@ import static org.springframework.util.StringUtils.isEmpty;
 @Service
 public class UserService {
     
-    @Autowired
     private UserRepository userRepository;
+    
+    public UserService(@Autowired UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
     
     public User addUser(UserDTO newUser) {
         

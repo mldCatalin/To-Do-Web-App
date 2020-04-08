@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-@RequestMapping(path = "/user")
+@RequestMapping(path = "/users")
 public class UserController {
     
     private UserService userService;

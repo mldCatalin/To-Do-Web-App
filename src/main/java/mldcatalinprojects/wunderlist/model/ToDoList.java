@@ -1,39 +1,38 @@
 package mldcatalinprojects.wunderlist.model;
 
+import org.springframework.data.annotation.Id;
+
 import javax.persistence.*;
 
-@Entity(name="folder")
-public class Folder {
-    
+@Entity(name="list")
+public class ToDoList {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "folderId")
+    @Column(name="listId")
     private Integer id;
     
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    private User createdByUser;
     
     @Column
     private String name;
-    
-    @Column
-    private Integer order;
-    
-    public Folder() {
-    }
     
     public Integer getId() {
         return id;
     }
     
-    public User getUser() {
-        return user;
+    public void setId(Integer id) {
+        this.id = id;
     }
     
-    public void setUser(User user) {
-        this.user = user;
+    public User getCreatedByUser() {
+        return createdByUser;
+    }
+    
+    public void setCreatedByUser(User createdByUser) {
+        this.createdByUser = createdByUser;
     }
     
     public String getName() {
@@ -42,13 +41,5 @@ public class Folder {
     
     public void setName(String name) {
         this.name = name;
-    }
-    
-    public Integer getOrder() {
-        return order;
-    }
-    
-    public void setOrder(Integer order) {
-        this.order = order;
     }
 }
