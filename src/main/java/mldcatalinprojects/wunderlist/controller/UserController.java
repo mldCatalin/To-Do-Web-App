@@ -1,6 +1,5 @@
 package mldcatalinprojects.wunderlist.controller;
 
-import mldcatalinprojects.wunderlist.model.EmailDTO;
 import mldcatalinprojects.wunderlist.model.User;
 import mldcatalinprojects.wunderlist.model.UserDTO;
 import mldcatalinprojects.wunderlist.service.UserService;
@@ -36,7 +35,7 @@ public class UserController {
     }
     
     @GetMapping(path = "/login")
-    public @ResponseBody User getUser(@RequestBody EmailDTO email) {
-        return userService.getUserByEmail(email);
+    public @ResponseBody Integer getUser(@RequestBody UserDTO user) {
+        return userService.getUserByEmail(user.getEmail());
     }
 }

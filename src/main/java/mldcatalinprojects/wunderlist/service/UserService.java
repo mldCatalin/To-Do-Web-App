@@ -3,7 +3,6 @@ package mldcatalinprojects.wunderlist.service;
 import mldcatalinprojects.wunderlist.exception.InputValidationException;
 import mldcatalinprojects.wunderlist.exception.ResourceExistsException;
 import mldcatalinprojects.wunderlist.exception.ResourceNotFoundException;
-import mldcatalinprojects.wunderlist.model.EmailDTO;
 import mldcatalinprojects.wunderlist.model.User;
 import mldcatalinprojects.wunderlist.model.UserDTO;
 import mldcatalinprojects.wunderlist.repository.UserRepository;
@@ -40,11 +39,11 @@ public class UserService {
         return userRepository.findAll();
     }
     
-    public User getUserByEmail(EmailDTO email) {
-        User existingUser = userRepository.findUserByEmail(email.getEmail());
+    public Integer getUserByEmail(String email) {
+        User existingUser = userRepository.findUserByEmail(email);
         if (existingUser == null) {
             throw new ResourceNotFoundException("User not found");
         }
-        return existingUser;
+        return existingUser.getId();
     }
 }
