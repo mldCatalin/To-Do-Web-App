@@ -30,15 +30,13 @@ public class UserController {
         return userService.addUser(newUser);
     }
     
-    @GetMapping(path = "/all")
-    public @ResponseBody
-    Iterable<User> getUsers() {
+    @GetMapping
+    public @ResponseBody Iterable<User> getUsers() {
         return userService.getUsers();
     }
     
-    @GetMapping(consumes = "application/json")
-    public @ResponseBody
-    User getUser(@RequestBody EmailDTO email) {
+    @GetMapping(path = "/login")
+    public @ResponseBody User getUser(@RequestBody EmailDTO email) {
         return userService.getUserByEmail(email);
     }
 }

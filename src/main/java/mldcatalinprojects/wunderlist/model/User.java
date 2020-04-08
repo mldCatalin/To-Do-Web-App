@@ -1,6 +1,7 @@
 package mldcatalinprojects.wunderlist.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name="user")
 public class User {
@@ -15,6 +16,17 @@ public class User {
     
     @Column
     private String name;
+    
+    @OneToMany(mappedBy = "user")
+    private List<Folder> folders;
+    
+    public List<Folder> getFolders() {
+        return folders;
+    }
+    
+    public void setFolders(List<Folder> folders) {
+        this.folders = folders;
+    }
     
     public Integer getId() {
         return id;
