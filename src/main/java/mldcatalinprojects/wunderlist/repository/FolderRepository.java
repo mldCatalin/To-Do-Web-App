@@ -1,7 +1,10 @@
 package mldcatalinprojects.wunderlist.repository;
 
-/**
- * @author Catalin Moldovan
- */
-public class FolderRepository {
+
+import mldcatalinprojects.wunderlist.model.Folder;
+import org.springframework.data.repository.CrudRepository;
+
+public interface FolderRepository extends CrudRepository<Folder, Integer> {
+    
+
 }
