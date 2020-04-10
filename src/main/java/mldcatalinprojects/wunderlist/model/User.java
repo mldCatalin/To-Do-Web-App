@@ -17,7 +17,7 @@ public class User {
     @Column
     private String name;
     
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "owner")
     private List<Folder> folders;
     
     @OneToMany(mappedBy = "createdByUser")

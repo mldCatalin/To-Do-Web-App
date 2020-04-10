@@ -1,6 +1,7 @@
 package mldcatalinprojects.wunderlist.model;
 
-import org.springframework.data.annotation.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
@@ -13,7 +14,8 @@ public class ToDoList {
     private Integer id;
     
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "createdByUserId")
+    @JsonIgnore
     private User createdByUser;
     
     @Column

@@ -1,5 +1,7 @@
 package mldcatalinprojects.wunderlist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity(name="folder")
@@ -13,7 +15,8 @@ public class Folder {
     
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
-    private User user;
+    @JsonIgnore
+    private User owner;
     
     @Column
     private String name;
@@ -28,12 +31,12 @@ public class Folder {
         return id;
     }
     
-    public User getUser() {
-        return user;
+    public User getOwner() {
+        return owner;
     }
     
-    public void setUser(User user) {
-        this.user = user;
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
     
     public String getName() {

@@ -4,6 +4,7 @@ import mldcatalinprojects.wunderlist.exception.InputValidationException;
 import mldcatalinprojects.wunderlist.exception.ResourceExistsException;
 import mldcatalinprojects.wunderlist.model.ToDoList;
 import mldcatalinprojects.wunderlist.model.ListDTO;
+import mldcatalinprojects.wunderlist.model.User;
 import mldcatalinprojects.wunderlist.repository.ListRepository;
 import mldcatalinprojects.wunderlist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +27,16 @@ public class ListService {
         if(isEmpty(newList.getName()) || isEmpty(newList.getUserId())){
             throw new InputValidationException("Missing toDoList name and/or user ID");
         }
-        
-        
-        ToDoList existingToDoList = listRepository.findListByName(newList.getName());
+    
+        User owner = userRepository.findUserById(newList.getUserId());
+        ToDoList existingToDoList = listRepository.findListByNameAndUserId(newList.getName(), owner.getId());
         if(existingToDoList != null){
             throw new ResourceExistsException("A toDoList with this name already exists");
         }
     
         ToDoList toDoList = new ToDoList();
         toDoList.setName(newList.getName());
-        toDoList.setCreatedByUser(userRepository.findUserById(newList.getUserId()));
+        toDoList.setCreatedByUser(owner);
         
        
         return listRepository.save(toDoList);

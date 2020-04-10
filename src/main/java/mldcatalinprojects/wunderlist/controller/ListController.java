@@ -19,9 +19,7 @@ public class ListController {
     public ListController(@Autowired ListService listService){this.listService = listService;}
     
     @PostMapping
-    public @ResponseBody
-    ToDoList addList(@RequestBody ListDTO newList){
-        
+    public @ResponseBody ToDoList addList(@RequestBody ListDTO newList){
         return listService.addList(newList);
     }
 }
