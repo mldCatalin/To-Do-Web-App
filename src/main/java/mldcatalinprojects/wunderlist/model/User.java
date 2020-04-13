@@ -3,12 +3,13 @@ package mldcatalinprojects.wunderlist.model;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name="user")
+@Entity(name = "User")
+@Table(name = "user")
 public class User {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "id")
     private Integer id;
     
     @Column(name = "email")

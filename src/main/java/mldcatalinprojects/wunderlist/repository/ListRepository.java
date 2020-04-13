@@ -12,7 +12,7 @@ public interface ListRepository extends CrudRepository<ToDoList, Integer> {
     
     ToDoList findListByName(String name);
     
-    @Query(value = "SELECT * FROM list WHERE list.name = ?1 AND list.createdByUserId = ?2", nativeQuery = true)
+    @Query(value = "SELECT * FROM to_do_list as list WHERE list.name = ?1 AND list.created_by_user_id = ?2", nativeQuery = true)
     ToDoList findListByNameAndUserId(@RequestParam String name, @RequestParam Integer userId);
     
 }

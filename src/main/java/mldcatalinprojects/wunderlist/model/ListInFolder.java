@@ -3,11 +3,10 @@ package mldcatalinprojects.wunderlist.model;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity(name = "listinfolder")
-@Table(name = "listinfolder")
+@Entity(name = "ListInFolder")
+@Table(name = "list_in_folder")
 public class ListInFolder {
     
-    //@Id
     @EmbeddedId
     private ListInFolderId id;
     
@@ -16,15 +15,15 @@ public class ListInFolder {
      * mapping for an EmbeddedId primary key
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("listId")
+    @MapsId("id")
     private ToDoList toDoList;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("folderId")
+    @MapsId("id")
     private Folder folder;
     
-    @Column(name = "listOrder", nullable = false)
-    private Integer order;
+    @Column(name = "list_order", nullable = false)
+    private Integer listOrder;
     
     @Column(name = "dnd")
     private boolean doNotDisturb;
@@ -32,9 +31,10 @@ public class ListInFolder {
     private ListInFolder() {
     }
     
-    public ListInFolder(Folder folder, ToDoList toDoList) {
+    public ListInFolder(Folder folder, ToDoList toDoList, Integer listOrder) {
         this.toDoList = toDoList;
         this.folder = folder;
+        this.listOrder = listOrder;
         this.id = new ListInFolderId(toDoList.getId(), folder.getId());
     }
     
@@ -79,12 +79,12 @@ public class ListInFolder {
         this.folder = folder;
     }
     
-    public Integer getOrder() {
-        return order;
+    public Integer getListOrder() {
+        return listOrder;
     }
     
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setListOrder(Integer listOrder) {
+        this.listOrder = listOrder;
     }
     
     public boolean isDoNotDisturb() {

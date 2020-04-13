@@ -44,11 +44,11 @@ public class ListService {
         
         //TODO: constructor with the mandatory fields
         //TODO: check other entities for non-nullable cols
-        Folder envelope = new Folder(HIDDEN, owner, folderRepository.countFolderByUserId(owner.getId())+1);
+        Folder envelope = new Folder(HIDDEN, owner, folderRepository.countFolderByUserId(owner.getId()) + 1);
         envelope.addToDoList(toDoList);
         Folder savedEnvelope = folderRepository.save(envelope);
-    
-    
+        
+        
         return toDoList;
     }
 }

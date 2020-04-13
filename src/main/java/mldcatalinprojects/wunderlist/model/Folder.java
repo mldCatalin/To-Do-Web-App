@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@Entity(name = "folder")
+@Entity(name = "Folder")
 @Table(name = "folder")
 public class Folder {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "folderId")
+    @GeneratedValue
+    @Column(name = "id")
     private Integer id;
     
     @Column(name = "name", nullable = false)
@@ -31,14 +31,15 @@ public class Folder {
      * to its corresponding column in the parent table
      */
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User owner;
     
-    @Column(name = "folderOrder", nullable = false)
+    @Column(name = "folder_order", nullable = false)
     private Integer order;
     
-    private Folder() {}
+    private Folder() {
+    }
     
     public Folder(String name, User owner, Integer order) {
         this.name = name;
@@ -46,16 +47,16 @@ public class Folder {
         this.order = order;
     }
     
-    public void addToDoList(ToDoList toDoList){
-        ListInFolder listInFolder = new ListInFolder(this, toDoList);
+    public void addToDoList(ToDoList toDoList) {
+        ListInFolder listInFolder = new ListInFolder(this, toDoList, toDoLists.size() + 1);
         toDoLists.add(listInFolder);
     }
     
-    public void removeToDoLIst(ToDoList toDoList){
-        for(Iterator<ListInFolder> iterator = toDoLists.iterator(); iterator.hasNext();){
+    public void removeToDoLIst(ToDoList toDoList) {
+        for (Iterator<ListInFolder> iterator = toDoLists.iterator(); iterator.hasNext(); ) {
             ListInFolder listInFolder = iterator.next();
             
-            if(listInFolder.getFolder().equals(this) && listInFolder.getToDoList().equals(toDoList)){
+            if (listInFolder.getFolder().equals(this) && listInFolder.getToDoList().equals(toDoList)) {
                 iterator.remove();
                 listInFolder.setFolder(null);
                 listInFolder.setToDoList(null);

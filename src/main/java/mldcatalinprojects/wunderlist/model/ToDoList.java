@@ -9,19 +9,16 @@ import org.hibernate.annotations.NaturalIdCache;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Entity(name = "list")
-@Table(name = "list")
-@NaturalIdCache
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Entity(name = "ToDoList")
+@Table(name = "to_do_list")
 public class ToDoList {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "listId")
+    @GeneratedValue
+    @Column(name = "id")
     private Integer id;
     
-    
-    @NaturalId
+    //@NaturalId
     @Column(name = "name", nullable = false)
     private String name;
     
@@ -30,7 +27,7 @@ public class ToDoList {
      * to its corresponding column in the parent table
      */
     @ManyToOne
-    @JoinColumn(name = "createdByUserId", nullable = false)
+    @JoinColumn(name = "created_by_user_id", nullable = false)
     @JsonIgnore
     private User createdByUser;
     

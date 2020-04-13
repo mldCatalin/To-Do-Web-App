@@ -11,10 +11,10 @@ import java.util.Objects;
 @Embeddable
 public class ListInFolderId implements Serializable {
     
-    @Column(name = "listId", nullable = false)
+    @Column(name = "list_id")
     private Integer listId;
     
-    @Column(name = "folderId", nullable = false)
+    @Column(name = "folder_id")
     private Integer folderId;
     
     public ListInFolderId(Integer listId, Integer folderId) {

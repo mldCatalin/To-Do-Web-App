@@ -34,6 +34,8 @@ public class UserController {
         return userService.getUsers();
     }
     
+    
+    //TODO: change get user by id, not email. also change api path
     @GetMapping(path = "/login")
     public @ResponseBody Integer getUser(@RequestBody UserDTO user) {
         return userService.getUserByEmail(user.getEmail());
