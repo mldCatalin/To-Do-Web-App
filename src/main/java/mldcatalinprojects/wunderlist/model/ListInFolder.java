@@ -6,11 +6,15 @@ import java.util.Objects;
 @Entity(name = "listinfolder")
 @Table(name = "listinfolder")
 public class ListInFolder {
-
-    @Id
-    @Embedded
+    
+    //@Id
+    @EmbeddedId
     private ListInFolderId id;
     
+    /**
+     * MapsId designates a ManyToOne relationship attribute that provides the
+     * mapping for an EmbeddedId primary key
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("listId")
     private ToDoList toDoList;
@@ -25,7 +29,8 @@ public class ListInFolder {
     @Column(name = "dnd")
     private boolean doNotDisturb;
     
-    private ListInFolder(){}
+    private ListInFolder() {
+    }
     
     public ListInFolder(Folder folder, ToDoList toDoList) {
         this.toDoList = toDoList;

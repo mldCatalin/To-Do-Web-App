@@ -11,15 +11,23 @@ public class User {
     @Column(name = "userId")
     private Integer id;
     
-    @Column
+    @Column(name = "email")
     private String email;
     
-    @Column
+    @Column(name = "name")
     private String name;
     
+    /**
+     * mappedBy references the annotated variable to its corresponding member
+     * inside the child entity (name matches member name not column)
+     */
     @OneToMany(mappedBy = "owner")
     private List<Folder> folders;
     
+    /**
+     * mappedBy references the annotated variable to its corresponding member
+     * inside the child entity (name matches member name not column)
+     */
     @OneToMany(mappedBy = "createdByUser")
     private List<ToDoList> toDoLists;
     

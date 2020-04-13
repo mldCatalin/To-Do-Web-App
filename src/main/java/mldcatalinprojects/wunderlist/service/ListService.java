@@ -23,7 +23,7 @@ public class ListService {
     private UserRepository userRepository;
     private FolderRepository folderRepository;
     
-    public ListService(@Autowired ListRepository listRepository, UserRepository userRepository, FolderRepository folderRepository) {
+    public ListService(@Autowired ListRepository listRepository, @Autowired UserRepository userRepository, @Autowired FolderRepository folderRepository) {
         this.listRepository = listRepository;
         this.userRepository = userRepository;
         this.folderRepository = folderRepository;
@@ -40,17 +40,12 @@ public class ListService {
             throw new ResourceExistsException("A toDoList with this name already exists");
         }
         
-        ToDoList toDoList = new ToDoList();
-        toDoList.setName(newList.getName());
-        toDoList.setCreatedByUser(owner);
+        ToDoList toDoList = new ToDoList(newList.getName(), owner);
         
         //TODO: constructor with the mandatory fields
         //TODO: check other entities for non-nullable cols
-        Folder envelope = new Folder();
-        envelope.setName(HIDDEN);
-        envelope.setOwner(owner);
+        Folder envelope = new Folder(HIDDEN, owner, folderRepository.countFolderByUserId(owner.getId())+1);
         envelope.addToDoList(toDoList);
-        envelope.setOrder(1);
         Folder savedEnvelope = folderRepository.save(envelope);
     
     

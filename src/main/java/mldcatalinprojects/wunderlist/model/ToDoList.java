@@ -22,13 +22,24 @@ public class ToDoList {
     
     
     @NaturalId
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
     
+    /**
+     * JoinColumn references this annotated member
+     * to its corresponding column in the parent table
+     */
     @ManyToOne
-    @JoinColumn(name = "createdByUserId")
+    @JoinColumn(name = "createdByUserId", nullable = false)
     @JsonIgnore
     private User createdByUser;
+    
+    private ToDoList(){}
+    
+    public ToDoList(String name, User createdByUser) {
+        this.name = name;
+        this.createdByUser = createdByUser;
+    }
     
     @Override
     public boolean equals(Object o) {

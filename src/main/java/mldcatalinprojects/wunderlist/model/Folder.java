@@ -16,7 +16,7 @@ public class Folder {
     @Column(name = "folderId")
     private Integer id;
     
-    @Column
+    @Column(name = "name", nullable = false)
     private String name;
     
     @OneToMany(
@@ -26,6 +26,10 @@ public class Folder {
     )
     private List<ListInFolder> toDoLists = new ArrayList<>();
     
+    /**
+     * JoinColumn references this annotated member
+     * to its corresponding column in the parent table
+     */
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     @JsonIgnore
@@ -33,6 +37,14 @@ public class Folder {
     
     @Column(name = "folderOrder", nullable = false)
     private Integer order;
+    
+    private Folder() {}
+    
+    public Folder(String name, User owner, Integer order) {
+        this.name = name;
+        this.owner = owner;
+        this.order = order;
+    }
     
     public void addToDoList(ToDoList toDoList){
         ListInFolder listInFolder = new ListInFolder(this, toDoList);
