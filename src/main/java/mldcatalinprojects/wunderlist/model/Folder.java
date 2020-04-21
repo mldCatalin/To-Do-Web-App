@@ -12,7 +12,7 @@ import java.util.List;
 public class Folder {
     
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     private Integer id;
     
@@ -48,7 +48,7 @@ public class Folder {
     }
     
     public void addToDoList(ToDoList toDoList) {
-        ListInFolder listInFolder = new ListInFolder(this, toDoList, toDoLists.size() + 1);
+        ListInFolder listInFolder = new ListInFolder(this, toDoList, toDoLists.size() + 1, false);
         toDoLists.add(listInFolder);
     }
     

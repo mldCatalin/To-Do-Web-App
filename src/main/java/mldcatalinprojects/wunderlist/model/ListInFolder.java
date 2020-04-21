@@ -15,11 +15,12 @@ public class ListInFolder {
      * mapping for an EmbeddedId primary key
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("id")
+    @MapsId("toDoListId")
     private ToDoList toDoList;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("id")
+    @MapsId("folderId")//literally tells H where to copy the folder's Id
+    // the value of the id in folder is copied onto the "folderId" member in the embedded id
     private Folder folder;
     
     @Column(name = "list_order", nullable = false)
@@ -31,10 +32,11 @@ public class ListInFolder {
     private ListInFolder() {
     }
     
-    public ListInFolder(Folder folder, ToDoList toDoList, Integer listOrder) {
+    public ListInFolder(Folder folder, ToDoList toDoList, Integer listOrder, boolean doNotDisturb) {
         this.toDoList = toDoList;
         this.folder = folder;
         this.listOrder = listOrder;
+        this.doNotDisturb = doNotDisturb;
         this.id = new ListInFolderId(toDoList.getId(), folder.getId());
     }
     

@@ -11,14 +11,14 @@ import java.util.Objects;
 @Embeddable
 public class ListInFolderId implements Serializable {
     
-    @Column(name = "list_id")
-    private Integer listId;
+    @Column(name = "to_do_list_id")
+    private Integer toDoListId;
     
     @Column(name = "folder_id")
     private Integer folderId;
     
-    public ListInFolderId(Integer listId, Integer folderId) {
-        this.listId = listId;
+    public ListInFolderId(Integer toDoListId, Integer folderId) {
+        this.toDoListId = toDoListId;
         this.folderId = folderId;
     }
     
@@ -30,21 +30,21 @@ public class ListInFolderId implements Serializable {
             return false;
         
         ListInFolderId that = (ListInFolderId) o;
-        return Objects.equals(listId, that.listId) &&
+        return Objects.equals(toDoListId, that.toDoListId) &&
                 Objects.equals(folderId, that.folderId);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(listId, folderId);
+        return Objects.hash(toDoListId, folderId);
     }
     
-    public Integer getListId() {
-        return listId;
+    public Integer getToDoListId() {
+        return toDoListId;
     }
     
-    public void setListId(Integer listId) {
-        this.listId = listId;
+    public void setToDoListId(Integer toDoListId) {
+        this.toDoListId = toDoListId;
     }
     
     public Integer getFolderId() {
