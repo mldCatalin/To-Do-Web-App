@@ -1,7 +1,7 @@
 package mldcatalinprojects.wunderlist.controller;
 
 import mldcatalinprojects.wunderlist.model.ToDoList;
-import mldcatalinprojects.wunderlist.model.ListDTO;
+import mldcatalinprojects.wunderlist.model.ToDoListDTO;
 import mldcatalinprojects.wunderlist.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,8 @@ public class ListController {
     public ListController(@Autowired ListService listService){this.listService = listService;}
     
     @PostMapping
-    public @ResponseBody ToDoList addList(@RequestBody ListDTO newList){
-        return listService.addList(newList);
+    public @ResponseBody ToDoList addList(@RequestBody ToDoListDTO newList){
+        return listService.addNewList(newList);
     }
+    
 }

@@ -3,7 +3,7 @@ package mldcatalinprojects.wunderlist.service;
 import mldcatalinprojects.wunderlist.exception.InputValidationException;
 import mldcatalinprojects.wunderlist.exception.ResourceExistsException;
 import mldcatalinprojects.wunderlist.model.Folder;
-import mldcatalinprojects.wunderlist.model.ListDTO;
+import mldcatalinprojects.wunderlist.model.ToDoListDTO;
 import mldcatalinprojects.wunderlist.model.ToDoList;
 import mldcatalinprojects.wunderlist.model.User;
 import mldcatalinprojects.wunderlist.repository.FolderRepository;
@@ -29,26 +29,30 @@ public class ListService {
         this.folderRepository = folderRepository;
     }
     
-    public ToDoList addList(ListDTO newList) {
-        if (isEmpty(newList.getName()) || isEmpty(newList.getUserId())) {
+    public ToDoList addNewList(ToDoListDTO newToDoList) {
+        if (isEmpty(newToDoList.getName()) || isEmpty(newToDoList.getUserId())) {
             throw new InputValidationException("Missing toDoList name and/or user ID");
         }
+    
+        User owner = userRepository.findUserById(newToDoList.getUserId());
+        ToDoList toDoList = ensureToDoList(newToDoList, owner);
+    
+        Folder envelope = new Folder(HIDDEN, toDoList.getCreatedByUser(), getFolderOrder(owner));
+        envelope.addToDoList(toDoList);
+        folderRepository.save(envelope);
         
-        User owner = userRepository.findUserById(newList.getUserId());
-        ToDoList existingToDoList = listRepository.findListByNameAndUserId(newList.getName(), owner.getId());
+        return toDoList;
+    }
+    
+    private ToDoList ensureToDoList(ToDoListDTO newToDoList, User owner){
+        ToDoList existingToDoList = listRepository.findListByNameAndUserId(newToDoList.getName(), owner.getId());
         if (existingToDoList != null) {
             throw new ResourceExistsException("A toDoList with this name already exists");
         }
-        
-        ToDoList toDoList = new ToDoList(newList.getName(), owner);
-        //ToDoList savedList = listRepository.save(toDoList);
+        return new ToDoList(newToDoList.getName(), owner);
+    }
     
-
-        Folder envelope = new Folder(HIDDEN, owner, folderRepository.countFolderByUserId(owner.getId()) + 1);
-        envelope.addToDoList(toDoList);
-        Folder savedEnvelope = folderRepository.save(envelope);
-        
-        
-        return toDoList;
+    private int getFolderOrder(User user) {
+        return folderRepository.countFolderByUserId(user.getId()) + 1;
     }
 }

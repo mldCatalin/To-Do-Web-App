@@ -1,6 +1,6 @@
 package mldcatalinprojects.wunderlist.model;
 
-public class ListDTO {
+public class ToDoListDTO {
     
     private String name;
     
