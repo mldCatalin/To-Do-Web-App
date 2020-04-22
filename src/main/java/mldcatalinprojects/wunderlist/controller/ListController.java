@@ -16,10 +16,13 @@ public class ListController {
     
     private ListService listService;
     
-    public ListController(@Autowired ListService listService){this.listService = listService;}
+    public ListController(@Autowired ListService listService) {
+        this.listService = listService;
+    }
     
     @PostMapping
-    public @ResponseBody ToDoList addList(@RequestBody ToDoListDTO newList){
+    public @ResponseBody
+    ToDoList addList(@RequestBody ToDoListDTO newList) {
         return listService.addNewList(newList);
     }
     

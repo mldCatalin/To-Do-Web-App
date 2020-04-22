@@ -3,14 +3,16 @@ package mldcatalinprojects.wunderlist.service;
 import mldcatalinprojects.wunderlist.exception.InputValidationException;
 import mldcatalinprojects.wunderlist.exception.ResourceExistsException;
 import mldcatalinprojects.wunderlist.model.Folder;
-import mldcatalinprojects.wunderlist.model.ToDoListDTO;
 import mldcatalinprojects.wunderlist.model.ToDoList;
+import mldcatalinprojects.wunderlist.model.ToDoListDTO;
 import mldcatalinprojects.wunderlist.model.User;
 import mldcatalinprojects.wunderlist.repository.FolderRepository;
 import mldcatalinprojects.wunderlist.repository.ListRepository;
 import mldcatalinprojects.wunderlist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static org.springframework.util.StringUtils.isEmpty;
 
@@ -28,6 +30,17 @@ public class ListService {
         this.userRepository = userRepository;
         this.folderRepository = folderRepository;
     }
+    
+    public Folder createGroup(List<ToDoList> toDoLists) {
+        
+        
+        return null;
+    }
+    
+    
+    
+    
+    
     
     public ToDoList addNewList(ToDoListDTO newToDoList) {
         if (isEmpty(newToDoList.getName()) || isEmpty(newToDoList.getUserId())) {

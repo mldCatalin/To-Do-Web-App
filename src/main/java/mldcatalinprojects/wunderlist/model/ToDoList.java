@@ -1,10 +1,6 @@
 package mldcatalinprojects.wunderlist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.NaturalId;
-import org.hibernate.annotations.NaturalIdCache;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -31,7 +27,9 @@ public class ToDoList {
     @JsonIgnore
     private User createdByUser;
     
-    private ToDoList(){}
+    
+    ToDoList() {
+    }
     
     public ToDoList(String name, User createdByUser) {
         this.name = name;

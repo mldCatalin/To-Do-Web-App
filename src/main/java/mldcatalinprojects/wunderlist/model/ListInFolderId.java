@@ -22,6 +22,10 @@ public class ListInFolderId implements Serializable {
         this.folderId = folderId;
     }
     
+    //hibernate needs a default constructor to work
+    ListInFolderId() {
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

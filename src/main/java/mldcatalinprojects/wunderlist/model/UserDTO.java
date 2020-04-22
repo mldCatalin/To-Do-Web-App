@@ -4,15 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
 
-/**
- * @author Catalin Moldovan
- */
+
 public class UserDTO {
     
     @JsonProperty(access = READ_ONLY)
     private Integer id;
     
     private String name;
+    
     private String email;
     
     public Integer getId() {

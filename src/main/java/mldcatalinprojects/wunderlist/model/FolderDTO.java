@@ -1,19 +1,32 @@
 package mldcatalinprojects.wunderlist.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FolderDTO {
     
-    private User user;
+    private Integer id;
     
     private String name;
     
     private Integer order;
     
-    public User getUser() {
-        return user;
+    private List<ToDoListDTO> toDoLists = new ArrayList<>();
+    
+    public Integer getId() {
+        return id;
     }
     
-    public void setUser(User user) {
-        this.user = user;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    public List<ToDoListDTO> getToDoLists() {
+        return toDoLists;
+    }
+    
+    public void setToDoLists(List<ToDoListDTO> toDoLists) {
+        this.toDoLists = toDoLists;
     }
     
     public String getName() {
