@@ -1,6 +1,8 @@
 package mldcatalinprojects.wunderlist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class Folder {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @Fetch(FetchMode.JOIN)
     private List<ListInFolder> toDoLists = new ArrayList<>();
     
     /**

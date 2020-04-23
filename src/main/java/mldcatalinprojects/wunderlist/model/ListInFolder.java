@@ -1,5 +1,8 @@
 package mldcatalinprojects.wunderlist.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -15,6 +18,7 @@ public class ListInFolder {
      * mapping for an EmbeddedId primary key
      */
     @ManyToOne(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
     @MapsId("toDoListId")
     private ToDoList toDoList;
     

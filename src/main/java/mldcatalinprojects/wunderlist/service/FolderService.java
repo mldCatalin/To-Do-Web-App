@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FolderService {
@@ -22,6 +24,10 @@ public class FolderService {
         List<Folder> allFoldersByOwnerId = folderRepository.getAllFoldersByOwnerId(userId);
     
         return convertToDTOs(allFoldersByOwnerId);
+    }
+    
+    public FolderDTO createNewFolder(Map<String, Integer> requestBody) {
+        return null;
     }
     
     private List<FolderDTO> convertToDTOs(List<Folder> folders) {
@@ -43,9 +49,10 @@ public class FolderService {
                 
                 folderDTO.getToDoLists().add(toDoListDTO);
             }
-            
+            folderDTO.getToDoLists().sort(Comparator.comparing(ToDoListDTO::getOrder));
             folderDTOs.add(folderDTO);
         }
+        folderDTOs.sort(Comparator.comparing(FolderDTO::getOrder));
         return folderDTOs;
     }
 }

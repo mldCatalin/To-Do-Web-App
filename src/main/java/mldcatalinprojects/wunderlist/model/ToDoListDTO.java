@@ -1,5 +1,6 @@
 package mldcatalinprojects.wunderlist.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
@@ -10,6 +11,7 @@ public class ToDoListDTO {
     
     private String name;
     
+    @JsonIgnore
     private Integer userId;
     
     @JsonProperty(access = READ_ONLY)
