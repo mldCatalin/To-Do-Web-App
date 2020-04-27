@@ -13,4 +13,8 @@ public interface FolderRepository extends CrudRepository<Folder, Integer> {
     Integer countFolderByUserId(@RequestParam Integer userId);
     
     List<Folder> getAllFoldersByOwnerId(@RequestParam Integer ownerId);
+    
+    //ToDo: change method to a Hibernate default (don't use queries).
+    @Query(value = "select * from folder where folder.id = ?1")
+    Folder findFolderById(@RequestParam Integer id);
 }

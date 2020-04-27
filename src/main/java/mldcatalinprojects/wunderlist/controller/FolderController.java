@@ -1,6 +1,7 @@
 package mldcatalinprojects.wunderlist.controller;
 
 import mldcatalinprojects.wunderlist.model.FolderDTO;
+import mldcatalinprojects.wunderlist.model.PatchFolderInstructor;
 import mldcatalinprojects.wunderlist.service.FolderService;
 import mldcatalinprojects.wunderlist.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,10 @@ public class FolderController {
         return folderService.getAllFolders(body.get("userId"));
     }
     
-    @PostMapping(path = "/new")
-    public @ResponseBody FolderDTO createFolder(@RequestBody Map<String, Integer> requestBody){
+    @RequestMapping(path = "/{id}", method = RequestMethod.PATCH)
+    public @ResponseBody FolderDTO patchFolder(@PathVariable("id") Integer id, @RequestBody PatchFolderInstructor patchFolderInstructor){
         
-        return folderService.createNewFolder(requestBody);
+        return folderService.patchFolder(id, patchFolderInstructor);
     }
     
 }

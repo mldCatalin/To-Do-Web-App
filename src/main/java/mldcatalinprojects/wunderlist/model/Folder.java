@@ -98,4 +98,22 @@ public class Folder {
     public void setOrder(Integer order) {
         this.order = order;
     }
+    
+    public List<Integer> getToListIds() {
+        List<Integer> ids = new ArrayList<>();
+        for (ListInFolder listinFolder :
+                getToDoLists()) {
+            ids.add(listinFolder.getToDoList().getId());
+        }
+    return ids;
+    }
+    
+    //ToDo: Some exceptions here maybe.. NullPointer Alert!
+    public ToDoList getToDoListById(Integer existingId) {
+        for (ListInFolder listInFolder : getToDoLists()) {
+            if(listInFolder.getToDoList().getId() == existingId)
+                return listInFolder.getToDoList();
+        }
+        return null;
+    }
 }
