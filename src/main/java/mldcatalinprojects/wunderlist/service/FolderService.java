@@ -2,6 +2,7 @@ package mldcatalinprojects.wunderlist.service;
 
 import mldcatalinprojects.wunderlist.model.*;
 import mldcatalinprojects.wunderlist.repository.FolderRepository;
+import mldcatalinprojects.wunderlist.repository.ListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,23 +14,26 @@ import java.util.List;
 public class FolderService {
     
     private FolderRepository folderRepository;
+    private ListRepository listRepository;
     
-    public FolderService(@Autowired FolderRepository folderRepository) {
+    public FolderService(@Autowired FolderRepository folderRepository, @Autowired ListRepository listRepository) {
         this.folderRepository = folderRepository;
+        this.listRepository = listRepository;
     }
     
-    public FolderDTO patchFolder(Integer id, PatchFolderInstructor patchFolderInstructor) {
+    //ToDo: Method not final. needs more testing and development before implementation
+    public FolderDTO patchFolder(Integer id, UpdatedIds updatedIds) {
         Folder folderToBePatched = folderRepository.findFolderById(id);
-        if (folderToBePatched.getToDoLists().size() > patchFolderInstructor.getToDoListIds().size()) {
-            Folder updatedFolder = cleanFolder(folderToBePatched, patchFolderInstructor);
-            return convertToDTO(updatedFolder);
+        if (folderToBePatched.getToDoLists().size() > updatedIds.getToDoListIds().size()) {
+            return cleanFolder(folderToBePatched, updatedIds);
         } else {
-            Folder updatedFolder = enrichFolder(folderToBePatched, patchFolderInstructor);
-            return convertToDTO(updatedFolder);
+            return enrichFolder(folderToBePatched, updatedIds);
         }
     }
     
-    private Folder cleanFolder(Folder folderToBePatched, PatchFolderInstructor updatedListIds) {
+    //ToDo: Method not final. needs more testing and development before implementation
+    //It deletes list from db when removing from folder
+    private FolderDTO cleanFolder(Folder folderToBePatched, UpdatedIds updatedListIds) {
         List<Integer> currentToDoListIds = folderToBePatched.getToListIds();
         
         for (Integer existingId : currentToDoListIds) {
@@ -38,13 +42,24 @@ public class FolderService {
                 folderToBePatched.removeToDoLIst(listToRemove);
             }
         }
-        return folderToBePatched;
+        folderRepository.save(folderToBePatched);
+        return convertToDTO(folderToBePatched);
     }
     
-    private Folder enrichFolder(Folder folderToBePatched, PatchFolderInstructor updatedListIds) {
+    //ToDo: Method not final. needs more testing and development before implementation
+    //It duplicates the list for current user, when adding it to the folder.
+    //one in the original place, a copy added in the folder
+    private FolderDTO enrichFolder(Folder folderToBePatched, UpdatedIds updatedListIds) {
+        List<Integer> currentToDoListIds = folderToBePatched.getToListIds();
         
-        
-        return folderToBePatched;
+        for (Integer updatedListId : updatedListIds.getToDoListIds()) {
+            if(!currentToDoListIds.contains(updatedListId)){
+                ToDoList listToAdd = listRepository.getToDoListById(updatedListId);
+                folderToBePatched.addToDoList(listToAdd);
+            }
+        }
+        folderRepository.save(folderToBePatched);
+        return convertToDTO(folderToBePatched);
     }
     
     public List<FolderDTO> getAllFolders(Integer userId) {
@@ -54,7 +69,7 @@ public class FolderService {
         return convertToDTOs(allFoldersByOwnerId);
     }
     
-    private FolderDTO convertToDTO(Folder folderToConvert) {
+    FolderDTO convertToDTO(Folder folderToConvert) {
         FolderDTO folderDTO = new FolderDTO();
         folderDTO.setId(folderToConvert.getId());
         folderDTO.setName(folderToConvert.getName());

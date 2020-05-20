@@ -3,7 +3,7 @@ package mldcatalinprojects.wunderlist.model;
 
 import java.util.List;
 
-public class PatchFolderInstructor {
+public class UpdatedIds {
     
     private List<Integer> toDoListIds;
     

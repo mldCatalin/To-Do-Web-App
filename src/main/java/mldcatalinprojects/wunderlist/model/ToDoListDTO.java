@@ -11,11 +11,20 @@ public class ToDoListDTO {
     
     private String name;
     
-    @JsonIgnore
+    @JsonProperty(access = READ_ONLY)
     private Integer userId;
     
     @JsonProperty(access = READ_ONLY)
     private Integer order;
+    
+    public ToDoListDTO() {
+    }
+    
+    public ToDoListDTO(Integer id, String name, Integer userId) {
+        this.id = id;
+        this.name = name;
+        this.userId = userId;
+    }
     
     public Integer getId() {
         return id;

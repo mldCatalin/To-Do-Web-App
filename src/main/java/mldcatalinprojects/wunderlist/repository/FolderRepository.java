@@ -14,7 +14,14 @@ public interface FolderRepository extends CrudRepository<Folder, Integer> {
     
     List<Folder> getAllFoldersByOwnerId(@RequestParam Integer ownerId);
     
-    //ToDo: change method to a Hibernate default (don't use queries).
-    @Query(value = "select * from folder where folder.id = ?1")
     Folder findFolderById(@RequestParam Integer id);
+    
+    @Query(value = "select folder.* from folder " +
+            "left join list_in_folder as lf on folder.id = lf.folder_id " +
+            "where (lf.to_do_list_id = ?1)", nativeQuery = true)
+    Folder getToDoListContainingFolder(@RequestParam Integer id);
+    
+    Folder getFolderById(Integer id);
+    
+    
 }
