@@ -1,8 +1,6 @@
 package mldcatalinprojects.wunderlist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,7 +24,6 @@ public class Folder {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @Fetch(FetchMode.JOIN)
     private List<ListInFolder> toDoLists = new ArrayList<>();
     
     /**
@@ -41,7 +38,7 @@ public class Folder {
     @Column(name = "folder_order", nullable = false)
     private Integer order;
     
-    private Folder() {
+    public Folder() {
     }
     
     public Folder(String name, User owner, Integer order) {
@@ -53,6 +50,7 @@ public class Folder {
     public void addToDoList(ToDoList toDoList) {
         ListInFolder listInFolder = new ListInFolder(this, toDoList, toDoLists.size() + 1, false);
         toDoLists.add(listInFolder);
+        toDoList.getFolders().add(listInFolder);
     }
     
     public void removeToDoLIst(ToDoList toDoList) {
@@ -61,6 +59,7 @@ public class Folder {
             
             if (listInFolder.getFolder().equals(this) && listInFolder.getToDoList().equals(toDoList)) {
                 iterator.remove();
+                listInFolder.getToDoList().getFolders().remove(listInFolder);
                 listInFolder.setFolder(null);
                 listInFolder.setToDoList(null);
             }

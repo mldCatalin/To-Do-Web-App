@@ -1,9 +1,7 @@
 package mldcatalinprojects.wunderlist.controller;
 
 import mldcatalinprojects.wunderlist.model.FolderDTO;
-import mldcatalinprojects.wunderlist.model.ToDoList;
 import mldcatalinprojects.wunderlist.model.ToDoListDTO;
-import mldcatalinprojects.wunderlist.model.UpdatedIds;
 import mldcatalinprojects.wunderlist.service.ListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +23,7 @@ public class ListController {
     //TODO: change return type to DTO
     @PostMapping
     public @ResponseBody
-    ToDoList addList(@RequestBody ToDoListDTO newList) {
+    ToDoListDTO addList(@RequestBody ToDoListDTO newList) {
         return listService.addNewList(newList);
     }
     

@@ -9,6 +9,8 @@ import mldcatalinprojects.wunderlist.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static org.springframework.util.StringUtils.isEmpty;
 
 @Service
@@ -31,7 +33,7 @@ public class ListService {
         this.folderService = folderService;
     }
     
-    public ToDoList addNewList(ToDoListDTO newToDoList) {
+    public ToDoListDTO addNewList(ToDoListDTO newToDoList) {
         if (isEmpty(newToDoList.getName()) || isEmpty(newToDoList.getUserId())) {
             throw new InputValidationException("Missing toDoList name and/or user ID");
         }
@@ -43,7 +45,7 @@ public class ListService {
         envelope.addToDoList(toDoList);
         folderRepository.save(envelope);
         
-        return toDoList;
+        return convertListToDTO(toDoList);
     }
     
     private ToDoList ensureToDoList(ToDoListDTO newToDoList, User owner){
@@ -66,16 +68,36 @@ public class ListService {
         
         newToDoListFolder.addToDoList(toDoList);
         currentToDoListFolder.removeToDoLIst(toDoList);
-        
-        
+
+        if(folderIsEmpty(currentToDoListFolder.getId())){
+            folderRepository.deleteById(currentToDoListFolder.getId());
+        }
+        else{
+            folderRepository.save(currentToDoListFolder);
+        }
         folderRepository.save(newToDoListFolder);
-        folderRepository.save(currentToDoListFolder);
         
         return folderService.convertToDTO(newToDoListFolder);
     }
     
+    private boolean folderIsEmpty(Integer folderId) {
+        return folderRepository.getFolderById(folderId).getToDoLists().size() == 0;
+    }
+    
     private ToDoListDTO convertListToDTO(ToDoList toDoList) {
         User toDoListOwner = toDoList.getCreatedByUser();
-        return new ToDoListDTO(toDoList.getId(), toDoList.getName(), toDoListOwner.getId());
+        return new ToDoListDTO(toDoList.getId(), toDoList.getName(), toDoListOwner.getId(), getToDoListOrder(toDoList));
+    }
+    
+    private Integer getToDoListOrder(ToDoList toDoList) {
+        Integer order = null;
+        Folder containingFolder = folderRepository.getToDoListContainingFolder(toDoList.getId());
+        List<ListInFolder> folders = toDoList.getFolders();
+        for (ListInFolder listInFolder : folders) {
+            if (listInFolder.getFolder().getId().equals(containingFolder.getId())){
+                order = listInFolder.getListOrder();
+            }
+        }
+        return order;
     }
 }

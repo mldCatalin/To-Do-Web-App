@@ -1,17 +1,19 @@
 package mldcatalinprojects.wunderlist.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_WRITE;
 
 public class ToDoListDTO {
     
+    @JsonProperty(access = READ_ONLY)
     private Integer id;
     
+    @JsonProperty(access = READ_WRITE)
     private String name;
     
-    @JsonProperty(access = READ_ONLY)
+    @JsonProperty(access = READ_WRITE)
     private Integer userId;
     
     @JsonProperty(access = READ_ONLY)
@@ -20,10 +22,11 @@ public class ToDoListDTO {
     public ToDoListDTO() {
     }
     
-    public ToDoListDTO(Integer id, String name, Integer userId) {
+    public ToDoListDTO(Integer id, String name, Integer userId, Integer order) {
         this.id = id;
         this.name = name;
         this.userId = userId;
+        this.order = order;
     }
     
     public Integer getId() {

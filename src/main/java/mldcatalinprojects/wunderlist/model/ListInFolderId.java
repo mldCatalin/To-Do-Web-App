@@ -23,7 +23,7 @@ public class ListInFolderId implements Serializable {
     }
     
     //hibernate needs a default constructor to work
-    ListInFolderId() {
+    public ListInFolderId() {
     }
     
     @Override

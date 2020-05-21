@@ -16,6 +16,9 @@ public interface FolderRepository extends CrudRepository<Folder, Integer> {
     
     Folder findFolderById(@RequestParam Integer id);
     
+    
+    
+    //ToDo: possible issues for shared list. Same listId will be found in multiple folders
     @Query(value = "select folder.* from folder " +
             "left join list_in_folder as lf on folder.id = lf.folder_id " +
             "where (lf.to_do_list_id = ?1)", nativeQuery = true)

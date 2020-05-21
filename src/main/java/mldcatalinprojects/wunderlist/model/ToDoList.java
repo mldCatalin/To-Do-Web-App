@@ -1,8 +1,11 @@
 package mldcatalinprojects.wunderlist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "ToDoList")
@@ -14,9 +17,16 @@ public class ToDoList {
     @Column(name = "id")
     private Integer id;
     
-    //@NaturalId
+    @NaturalId
     @Column(name = "name", nullable = false)
     private String name;
+    
+    @OneToMany(
+            mappedBy = "toDoList",
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
+    )
+    private List<ListInFolder> folders = new ArrayList<>();
     
     /**
      * JoinColumn references this annotated member
@@ -45,6 +55,14 @@ public class ToDoList {
         
         ToDoList that = (ToDoList) o;
         return Objects.equals(this.id, that.getId());
+    }
+    
+    public List<ListInFolder> getFolders() {
+        return folders;
+    }
+    
+    public void setFolders(List<ListInFolder> folders) {
+        this.folders = folders;
     }
     
     public Integer getId() {
