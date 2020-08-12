@@ -68,14 +68,17 @@ public class ListService {
         
         newToDoListFolder.addToDoList(toDoList);
         currentToDoListFolder.removeToDoLIst(toDoList);
-
-        if(folderIsEmpty(currentToDoListFolder.getId())){
-            folderRepository.deleteById(currentToDoListFolder.getId());
-        }
-        else{
-            folderRepository.save(currentToDoListFolder);
-        }
+        
+        folderRepository.save(currentToDoListFolder);
         folderRepository.save(newToDoListFolder);
+        
+//        if(folderIsEmpty(currentToDoListFolder.getId())){
+//            folderRepository.deleteById(currentToDoListFolder.getId());
+//        }
+//        else{
+//            folderRepository.save(currentToDoListFolder);
+//        }
+//        folderRepository.save(newToDoListFolder);
         
         return folderService.convertToDTO(newToDoListFolder);
     }
@@ -99,5 +102,10 @@ public class ListService {
             }
         }
         return order;
+    }
+    
+    public void deleteToDoList(Integer toDoListId) {
+        ToDoList listToDelete = listRepository.getToDoListById(toDoListId);
+        listRepository.delete(listToDelete);
     }
 }

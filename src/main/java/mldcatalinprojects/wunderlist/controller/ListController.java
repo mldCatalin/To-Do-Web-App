@@ -34,4 +34,10 @@ public class ListController {
         
         return listService.moveToDoList(id, body.get("newFolderId"));
     }
+    
+    @RequestMapping(path = "/{toDoListId}", method = RequestMethod.DELETE)
+    void deleteToDoList(@PathVariable("toDoListId") Integer toDoListId){
+        
+        listService.deleteToDoList(toDoListId);
+    }
 }

@@ -23,7 +23,7 @@ public class ToDoList {
     
     @OneToMany(
             mappedBy = "toDoList",
-            cascade = CascadeType.REMOVE,
+            cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     private List<ListInFolder> folders = new ArrayList<>();
